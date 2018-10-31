@@ -19,6 +19,14 @@ public:
       throw size;
     pMem = new T[size];
   }
+  TStack(TStack &s)
+  {
+	  size = s.size;
+	  top = s.top;
+	  pMem = new T[size];
+	  for (int i = 0; i < size; i++)
+		  pMem[i] = s.pMem[i];
+  }
   ~TStack()
   {
     delete [] pMem;
@@ -54,11 +62,11 @@ public:
 	  count--;
 	  return pMem[top--];
   }
-  T top_el()
+  T Top_el()
   {
 	  return pMem[top];
   }
-  int prior()
+  int Prior()
   {
 	  if ((pMem[top] == '+') || (pMem[top] == '-'))
 		 return 1;
