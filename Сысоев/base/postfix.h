@@ -15,11 +15,95 @@ class TPostfix
   int prior;
 public:
 	TPostfix(string a = "a+b")
-  {
+    {
 	  infix = a;
-  }
+    }
   string GetInfix() { return infix; }
   string GetPostfix() { return postfix; }
+  bool IsValidByBrackets()
+  {
+	  int left = 0, right = 0;
+	  for (int i = 0; i < infix.size(); i++)
+	  {
+		  if (infix[i] == '(')
+			  left++;
+		  if (infix[i] == ')')
+			  right++;
+	  }
+	  if (right == left)
+		  return true;
+	  else
+		  return false;
+  }
+  bool IsValidByOpers()
+  {
+	  int operands = 0, operations = 0;
+	  for (int i = 0; i < infix.size(); i++)
+	  {
+		  if ((infix[i] == '(') || (infix[i] == ')'))
+			  continue;
+		  if ((infix[i] == '+') || (infix[i] == '-') || (infix[i] == '*') || (infix[i] == '/'))
+			  operations++;
+		  else
+			  if ((infix[i] != '+') && (infix[i] != '-') && (infix[i] != '*') && (infix[i] != '/'))
+			  {
+				  while ((infix[i] != '+') && (infix[i] != '-') && (infix[i] != '*') && (infix[i] != '/') && (i != infix.size()))
+					  i++;
+				  i--;
+				  operands++;
+			  }
+	  }
+	  if (operands - 1 == operations)
+		  return true;
+	  else 
+		  return false;
+  }
+  bool IsValidByPos()
+  {
+	  int i = 0;
+	  string last = "operand", current;
+	  if ((infix[0] == '+') || (infix[0] == '-') || (infix[0] == '*') || (infix[0] == '/'))
+		  return false;
+	  if (infix[0] == ')')
+		  return false;
+	  if (infix[0] == '(')
+			  last = "left bracket";
+		 else
+			 {
+				  while ((infix[i] != '+') && (infix[i] != '-') && (infix[i] != '*') && (infix[i] != '/') && (i != infix.size()))
+					  i++;
+				  last = "operation";
+			 }
+	  for (int j = i + 1; j < infix.size(); j++)
+	  {
+		  if (infix[j] == '(')
+			  current = "left bracket";
+		  else
+			  if (infix[j] == ')')
+				  current = "right bracket";
+			  else
+				  if ((infix[j] == '+') || (infix[j] == '-') || (infix[j] == '*') || (infix[j] == '/'))
+					  current = "operation";
+				  else
+					  if ((infix[j] != '+') && (infix[j] != '-') && (infix[j] != '*') && (infix[j] != '/'))
+					  {
+						  while ((infix[j] != '+') && (infix[j] != '-') && (infix[j] != '*') && (infix[j] != '/') && (j != infix.size()))
+							  j++;
+						  j--;
+						  current = "operand";
+					  }
+		  if (current == last || (last == "left bracket" && current == "right bracket"))
+			  return false;
+		  last = current;
+	  }
+	  return true;
+  }
+  bool IsValidInTotal()
+  {
+	  if (!IsValidByBrackets() || !IsValidByOpers() || !IsValidByPos())
+		  return false;
+	  return true;
+  }
   double Helper(double a, double b, char c)
   {
 	  switch (c)
@@ -59,7 +143,6 @@ public:
 		  if ((c != '+') && (c != '-') && (c != '/') && (c != '*') && (c != '(') && (c != ')'))
 		  {
 			  int j = i;
-			  char s = infix[j];
 			  while ((infix[j] != '+') && (infix[j] != '-') && (infix[j] != '/') && (infix[j] != '*') && (infix[j] != ')') && (j != infix.size()))
 			  {
 				  postfix.push_back(infix[j]);

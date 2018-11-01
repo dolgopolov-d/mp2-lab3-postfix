@@ -20,6 +20,8 @@ int main()
 		  cout << "Введите арифметическое выражение: " << endl;
 		  cin >> expression;
 		  TPostfix Postfix(expression);
+		  if (!Postfix.IsValidInTotal())
+			  throw "Error";
 		  cout << "Арифметическое выражение: " << expression << endl;
 		  Postfix.ToPostfix();
 		  cout << "Постфиксная форма: " << Postfix.GetPostfix() << endl;
@@ -30,6 +32,8 @@ int main()
 		  cout << "Введите арифметическое выражение: " << endl;
 		  cin >> expression;
 		  TPostfix Postfix(expression);
+		  if (!Postfix.IsValidInTotal())
+			  throw "Error";
 		  cout << "Арифметическое выражение: " << expression << endl;
 		  res = Postfix.Calculate();
 		  cout << res << endl;

@@ -64,10 +64,14 @@ public:
   }
   T Top_el()
   {
+	  if (IsEmpty())
+		  throw "Error";
 	  return pMem[top];
   }
   int Prior()
   {
+	  if (IsEmpty())
+		  throw "Error";
 	  if ((pMem[top] == '+') || (pMem[top] == '-'))
 		 return 1;
 	  if ((pMem[top] == '*') || (pMem[top] == '/'))
