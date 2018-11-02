@@ -9,6 +9,7 @@ class TStack
   T *pMem;
   int size;
   int top;
+  int count=0;
 public:
   TStack(int _size)
   {
@@ -18,9 +19,63 @@ public:
       throw size;
     pMem = new T[size];
   }
+  TStack(TStack &s)
+  {
+	  size = s.size;
+	  top = s.top;
+	  pMem = new T[size];
+	  for (int i = 0; i < size; i++)
+		  pMem[i] = s.pMem[i];
+  }
   ~TStack()
   {
     delete [] pMem;
+  }
+  int max_size()
+  {
+	  return size;
+  }
+  int Size()
+  {
+	  return count;
+  }
+  bool IsFull()
+  {
+	  return top == size -1;
+  }
+  bool IsEmpty()
+  {
+	  return top == -1;
+  }
+  void push(const T &a)
+  {
+	  if (IsFull())
+		  throw "Error";
+	  count++;
+	  top++;
+	  pMem[top] = a;
+  }
+  T pop()
+  {
+	  if (IsEmpty())
+		  throw "Error";
+	  count--;
+	  return pMem[top--];
+  }
+  T Top_el()
+  {
+	  if (IsEmpty())
+		  throw "Error";
+	  return pMem[top];
+  }
+  int Prior()
+  {
+	  if (IsEmpty())
+		  throw "Error";
+	  if ((pMem[top] == '+') || (pMem[top] == '-'))
+		 return 1;
+	  if ((pMem[top] == '*') || (pMem[top] == '/'))
+		  return 2;
   }
 };
 

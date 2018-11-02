@@ -6,19 +6,27 @@
 
 using namespace std;
 
+
 class TPostfix
 {
   string infix;
   string postfix;
+  int i = 0;
+  int prior;
+  bool NotOperation(char c);
+  bool IsValidByBrackets();
+  bool IsValidByOpers();
+  bool IsValidByPos();
+  bool IsValidInTotal();
+  double Helper(double a, double b, char c);
 public:
-  TPostfix()
-  {
-    infix = "a + b";
-  }
+	TPostfix(string a = "a+b")
+    {
+	  infix = a;
+    }
   string GetInfix() { return infix; }
   string GetPostfix() { return postfix; }
-  string ToPostfix();
-  double Calculate(); // Ввод переменных, вычисление по постфиксной форме
+  void ToPostfix();
+  double Calculate();
 };
-
 #endif
