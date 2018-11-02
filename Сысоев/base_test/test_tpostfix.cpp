@@ -1,5 +1,6 @@
 #include "postfix.h"
 #include <gtest.h>
+#include "postfix.cpp"
 
 TEST(TPostfix, can_create_postfix)
 {
@@ -40,5 +41,15 @@ TEST(TPostfix, can_calculate)
 {
 	TPostfix p("(10+10)*(15+15)");
 	EXPECT_EQ(600, p.Calculate());
+}
+TEST(TPostfix, can_calculate_large_infix)
+{
+	TPostfix p("(10+10)*(15+15)/20+(40-10)-50*3/2+((75+15)/6)");
+	EXPECT_EQ(0, p.Calculate());
+}
+TEST(TPostfix, cant_calculate_wrong_infix)
+{
+	TPostfix p("()10+10)*(15+15)/20+(40-10)-50*3/2+((75+15)/6)");
+	ASSERT_ANY_THROW(p.Calculate());
 }
 
