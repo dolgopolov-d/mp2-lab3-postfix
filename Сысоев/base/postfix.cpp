@@ -1,7 +1,13 @@
 ﻿
 #include "postfix.h"
 #include "stack.h"
-
+bool TPostfix::NotOperation(char c)
+{
+	if ((c != '+') && (c != '-') && (c != '/') && (c != '*'))
+		return true;
+	else 
+		return false;
+}
 void TPostfix::ToPostfix()
 {
 	TStack<char> a(MaxStackSize);
@@ -16,10 +22,10 @@ void TPostfix::ToPostfix()
 			prior = 2;
 		if ((c == '(') || (c == ')'))
 			prior = 0;
-		if ((c != '+') && (c != '-') && (c != '/') && (c != '*') && (c != '(') && (c != ')'))
+		if (NotOperation(c) && (c != '(') && (c != ')'))
 		{
 			int j = i;
-			while ((infix[j] != '+') && (infix[j] != '-') && (infix[j] != '/') && (infix[j] != '*') && (infix[j] != ')') && (j != infix.size()))
+			while (NotOperation(infix[j]) && (infix[j] != ')') && (j != infix.size()))
 			{
 				postfix.push_back(infix[j]);
 				j++;
@@ -73,7 +79,7 @@ double TPostfix::Calculate()
 	TStack<double> b(infix.size());
 	for (int i = 0; i < postfix.size(); i++)
 	{
-		if ((postfix[i] != '+') && (postfix[i] != '-') && (postfix[i] != '/') && (postfix[i] != '*'))
+		if (NotOperation(postfix[i]))
 		{
 			while (postfix[i] != ',')
 			{
@@ -142,12 +148,12 @@ bool TPostfix::IsValidByOpers()
 	{
 		if ((infix[i] == '(') || (infix[i] == ')'))
 			continue;
-		if ((infix[i] == '+') || (infix[i] == '-') || (infix[i] == '*') || (infix[i] == '/'))
+		if (!NotOperation(infix[i]))
 			operations++;
 		else
-			if ((infix[i] != '+') && (infix[i] != '-') && (infix[i] != '*') && (infix[i] != '/'))
+			if (NotOperation(infix[i]))
 			{
-				while ((infix[i] != '+') && (infix[i] != '-') && (infix[i] != '*') && (infix[i] != '/') && (i != infix.size()))
+				while (NotOperation(infix[i]) && (i != infix.size()))
 					i++;
 				i--;
 				operands++;
@@ -162,7 +168,7 @@ bool TPostfix::IsValidByPos()
 {
 	int i = 0;
 	string last = "operand", current;
-	if ((infix[0] == '+') || (infix[0] == '-') || (infix[0] == '*') || (infix[0] == '/'))
+	if (!NotOperation(infix[i]))
 		return false;
 	if (infix[0] == ')')
 		return false;
@@ -170,7 +176,7 @@ bool TPostfix::IsValidByPos()
 		last = "left bracket";
 	else
 	{
-		while ((infix[i] != '+') && (infix[i] != '-') && (infix[i] != '*') && (infix[i] != '/') && (i != infix.size()))
+		while (NotOperation(infix[i]) && (i != infix.size()))
 			i++;
 		last = "operation";
 	}
@@ -182,12 +188,12 @@ bool TPostfix::IsValidByPos()
 			if (infix[j] == ')')
 				current = "right bracket";
 			else
-				if ((infix[j] == '+') || (infix[j] == '-') || (infix[j] == '*') || (infix[j] == '/'))
+				if (!NotOperation(infix[j]))
 					current = "operation";
 				else
-					if ((infix[j] != '+') && (infix[j] != '-') && (infix[j] != '*') && (infix[j] != '/'))
+					if (NotOperation(infix[j]))
 					{
-						while ((infix[j] != '+') && (infix[j] != '-') && (infix[j] != '*') && (infix[j] != '/') && (j != infix.size()))
+						while (NotOperation(infix[j]) && (j != infix.size()))
 							j++;
 						j--;
 						current = "operand";

@@ -20,12 +20,13 @@ public:
     }
   string GetInfix() { return infix; }
   string GetPostfix() { return postfix; }
+  bool NotOperation(char c);
   bool IsValidByBrackets();
   bool IsValidByOpers();
   bool IsValidByPos();
   bool IsValidInTotal();
   double Helper(double a, double b, char c);
   void ToPostfix();
-  double Calculate(); // Ввод переменных, вычисление по постфиксной форме*/
+  double Calculate();
 };
 #endif
