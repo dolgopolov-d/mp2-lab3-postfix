@@ -20,22 +20,22 @@ TEST(TPostfix, can_get_postfix)
 TEST(TPostfix, can_check_true_infix)
 {
 	TPostfix p("a-b*c");
-	EXPECT_EQ(true, p.IsValidInTotal());
+	ASSERT_NO_THROW(p.ToPostfix());
 }
 TEST(TPostfix, can_check_false_brackets)
 {
 	TPostfix p("(a-))b*c");
-	EXPECT_EQ(false, p.IsValidByBrackets());
+	ASSERT_ANY_THROW(p.ToPostfix());
 }
 TEST(TPostfix, can_check_false_operations)
 {
 	TPostfix p("a-+b*c");
-	EXPECT_EQ(false, p.IsValidByOpers());
+	ASSERT_ANY_THROW(p.ToPostfix());
 }
 TEST(TPostfix, can_check_false_positioning)
 {
 	TPostfix p("a-+bc");
-	EXPECT_EQ(false, p.IsValidByPos());
+	ASSERT_ANY_THROW(p.ToPostfix());
 }
 TEST(TPostfix, can_calculate)
 {

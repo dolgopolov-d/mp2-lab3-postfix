@@ -13,6 +13,12 @@ class TPostfix
   string postfix;
   int i = 0;
   int prior;
+  bool NotOperation(char c);
+  bool IsValidByBrackets();
+  bool IsValidByOpers();
+  bool IsValidByPos();
+  bool IsValidInTotal();
+  double Helper(double a, double b, char c);
 public:
 	TPostfix(string a = "a+b")
     {
@@ -20,12 +26,6 @@ public:
     }
   string GetInfix() { return infix; }
   string GetPostfix() { return postfix; }
-  bool NotOperation(char c);
-  bool IsValidByBrackets();
-  bool IsValidByOpers();
-  bool IsValidByPos();
-  bool IsValidInTotal();
-  double Helper(double a, double b, char c);
   void ToPostfix();
   double Calculate();
 };
