@@ -31,7 +31,7 @@ public:
   {
     delete [] pMem;
   }
-  int max_size()
+  int Max_size()
   {
 	  return size;
   }
